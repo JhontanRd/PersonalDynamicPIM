@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Página de ferias";
+}
+@model List<FeriasModel>
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Personal Dynamic RH & DP</a> <!--Nome do cabeçalho-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item active">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Início</a> <!--Referente a página de inicio-->
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" asp-controller="Ponto" asp-action="Index">Apontamento</a> <!--Referente a página de inicio-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="FolhaPagamento" asp-action="FolhaPagamento">Folha de Pagamento</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Ferias" asp-action="Ferias">Férias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" tabindex="-1" aria-disabled="true" asp-controller="Login" asp-action="Index">Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="display-6" style="margin-top:20px; margin-bottom:20px">
+        <a>
+            <h3 style="width:700px" class="display-4">Minhas férias</h3>
+        </a>
+    </div>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+    }
+
+
+    @if (Model != null)
+    {
+        @foreach (var ferias in Model)
+        {
+            <div class="row border Regular shadow" style="margin-top:20px; margin-bottom:20px">
+                <p>
+                    Status férias: @ferias?.ObterStatusFerias() <!-- Adicione a verificação para ferias também -->
+                </p>
+            </div>
+        }
+    }
+
+    @if (Model != null && Model.Any<FeriasModel>())
+    {
+        foreach (FeriasModel ferias in Model)
+        {
+            <div class="row">
+                <div class="col-sm">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="container">
+                                <div class="col">
+                                    Nome: @ferias.Nome @ferias.Sobrenome
+                                </div>
+                                <br>
+                                <div class="col">
+                                    Número de registro @ferias.Registro
+                                </div>
+                                <br />
+                                <div class="col">
+                                    Início das férias: @ferias.Saida?.ToString("dd/MM/yyyy")
+                                    <br />
+                                </div>
+                                <div class="col">
+                                    Data final das férias: @ferias.Retorno?.ToString("dd/MM/yyyy")
+                                </div>
+                                    <br />
+                                <div class="col">
+                                    Dias gozados: @ferias.Dias_gozados
+                                </div>
+                                <br/>
+                                <div class="col">
+                                    Dias vendidios: @ferias.Dias_vendidos
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

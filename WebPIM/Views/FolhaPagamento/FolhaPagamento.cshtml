@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Página Folha de Pagamento";
+}
+@model List<FolhaPagModel>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Personal Dynamic RH & DP</a> <!--Nome do cabeçalho-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item active">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Início</a> <!--Referente a página de inicio-->
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" asp-controller="Ponto" asp-action="Index">Apontamento</a> <!--Referente a página de inicio-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="FolhaPagamento" asp-action="FolhaPagamento">Folha de Pagamento</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Ferias" asp-action="Ferias">Férias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" tabindex="-1" aria-disabled="true" asp-controller="Login" asp-action="Index">Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="text-center">
+    <h1 class="display-5">Sua Folha de Pagamento</h1>
+    <!--aqui será possivel visualizar ou baixar um pdf com as informações-->
+</div>
+<table class="table table-bordered">
+    <caption>Folha de pagamento</caption>
+    
+     @if (Model != null)
+     {
+       foreach (var folha in Model)
+        {
+            <tr>
+                <th scope="col" colspan="1">EMPRESA</th>
+                <th scope="col">CNPJ</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>@folha.Nome_fantasia</td>
+                <td>@folha.Cnpj</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="col">REGISTRO</th>
+                <th scope="col">FUNCIONÁRIO</th>
+                <th scope="col">FUNÇÃO</th>
+                <th scope="col">HORAS EXTRAS</th>
+            </tr>
+            <tr>
+                <td>@folha.Registro</td>
+                <td>@folha.Nome</td>
+                <td>@folha.Cargo</td>
+                <td>@folha.Horas_extras</td>
+            </tr>
+            <tr>
+                <th scope="col">INSALUBRIDADE</th>
+                <th scope="col">INSS</th>
+                <th scope="col">IRRF</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>@folha.Insalubridade</td>
+                <td>@folha.Inss</td>
+                <td>@folha.Irrf</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="col">VENCIMENTO</th>
+                <th scope="col">DESCONTO</th>
+                <th scope="col">ADICIONAL NOTA</th>
+                <th scope="col">VALE TRANSPORTE</th>
+            </tr>
+            <tr>
+                <td>@folha.Vencimentos</td>
+                <td>@folha.Descontos</td>
+                <td>@folha.Adicional_not</td>
+                <td>@folha.VL_transporte</td>
+            </tr>
+            <tr>
+                <th colspan="2">TOTAIS</th>
+                <th></th>
+                <th>LIQUÍDO Á RECEBER</th>
+            </tr>
+            <tr>
+                <td colspan="2">@folha.Salario_base.ToString("0.000")</td>
+                <td></td>
+                <td>@folha.Salario_liquido.ToString("0.000")</td>
+            </tr>
+        }
+    }
+    <thead>
+        <tr>
+            <th colspan="3">Assinatura: _______________________________________________________________</th>
+            <th colspan="1">Data:__/__/_____</th>
+        </tr>
+    </thead>
+</table>
+
